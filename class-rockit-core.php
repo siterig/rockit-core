@@ -3,8 +3,12 @@ namespace SiteRig\Rockit;
 
 class Core
 {
+    public $shortcodes;
+
     /**
      * Create a new instance
+     *
+     * @since 1.0.0
      */
     public function __construct() {
 
@@ -13,12 +17,50 @@ class Core
     }
 
     /**
+     * Add to universal shortcode
+     *
+     * @since 1.0.0
+     *
+     * @param   array   $args
+     * @return  boolean true if successful, false if option already exists
+     */
+    protected function add_option_to_shortcode( array $args ) {
+
+        if ( ! array_key_exists( $args['output'], $this->shortcodes) ) {
+
+            if ( function_exists( $args['function'] ) ) {
+
+                $sanitised_args['function'] = $args['function'];
+
+                if ( ! array_key_exists( 'filters', $args ) ) {
+
+                    $sanitised_args['filters'] = $args['filters'];
+
+                } else {
+
+                    $sanitised_args['filters'] = null;
+
+                }
+
+                $this->shortcodes[$args['output']] = $sanitised_args;
+                return true;
+
+            }
+
+        }
+        return false;
+
+    }
+
+    /**
      * Turn slug into camel case
+     *
+     * @since 1.0.0
      *
      * @param   string  $slug
      * @return  string  Camelcase version of the slug
      */
-    public function rockit_slug_to_camelcase( string $slug ) : string
+    public function slug_to_camelcase( string $slug ) : string
     {
         return str_replace( ' ', '', ucwords( str_replace( '-', ' ', $slug ) ) );
     }
@@ -26,17 +68,26 @@ class Core
     /**
      * Shortcode to output various site settings in the content
      *
-     * @param   array   $atts
+     * @since 1.0.0
+     *
+     * @param   array   $atts   Attributes
      * @return  string  Output of shortcode
      */
-    function create_shortcode( $atts ) {
+    private function create_shortcode( $atts ) {
 
         extract( shortcode_atts( array(
-            'option' => 'rockit',
+            'output' => 'rockit',
         ), $atts ) );
 
-        // return the field content
-        return "hello world";
+        if ($atts['output'] == 'rockit') {
+            return;
+        }
+
+        if ( !array_key_exists( $atts['output'], $this->shortcodes ) ) {
+            return;
+        }
+
+        $this->shortcodes['output']( $this->shortcodes['output']['function'] );
 
     }
 
