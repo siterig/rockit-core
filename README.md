@@ -1,2 +1,2 @@
 # rockit-core
-Core class used in the Rockit WordPress theme and plugins
+Core class used in the Rockit themes/plugins/addons
