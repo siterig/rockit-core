@@ -53,19 +53,6 @@ class Core
     }
 
     /**
-     * Turn slug into camel case
-     *
-     * @since 1.0.0
-     *
-     * @param   string  $slug
-     * @return  string  Camelcase version of the slug
-     */
-    public function slug_to_camelcase( string $slug ) : string
-    {
-        return str_replace( ' ', '', ucwords( str_replace( '-', ' ', $slug ) ) );
-    }
-
-    /**
      * Shortcode to output various site settings in the content
      *
      * @since 1.0.0
@@ -73,7 +60,7 @@ class Core
      * @param   array   $atts   Attributes
      * @return  string  Output of shortcode
      */
-    private function create_shortcode( $atts ) {
+    private function create_shortcode( array $atts ) {
 
         extract( shortcode_atts( array(
             'output' => 'siterig',
@@ -89,6 +76,19 @@ class Core
 
         $this->shortcodes['output']( $this->shortcodes['output']['function'] );
 
+    }
+
+    /**
+     * Turn slug into camel case
+     *
+     * @since 1.0.0
+     *
+     * @param   string  $slug
+     * @return  string  Camelcase version of the slug
+     */
+    public function slug_to_camelcase( string $slug ) : string
+    {
+        return str_replace( ' ', '', ucwords( str_replace( '-', ' ', $slug ) ) );
     }
 
 }
