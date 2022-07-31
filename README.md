@@ -1,2 +1,2 @@
-# rockit-core
-Core class used in the Rockit themes/plugins/addons
+# wp-siterig-core
+Core class used in SiteRig themes/plugins for WordPress

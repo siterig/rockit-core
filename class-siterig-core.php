@@ -1,5 +1,5 @@
 <?php
-namespace SiteRig\Rockit;
+namespace SiteRig;
 
 class Core
 {
@@ -12,7 +12,7 @@ class Core
      */
     public function __construct() {
 
-        add_shortcode( 'rockit', array( $this, 'create_shortcode' ) );
+        add_shortcode( 'siterig', array( $this, 'create_shortcode' ) );
 
     }
 
@@ -76,10 +76,10 @@ class Core
     private function create_shortcode( $atts ) {
 
         extract( shortcode_atts( array(
-            'output' => 'rockit',
+            'output' => 'siterig',
         ), $atts ) );
 
-        if ($atts['output'] == 'rockit') {
+        if ($atts['output'] == 'siterig') {
             return;
         }
 
